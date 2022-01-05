@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSecondsRealtime(1f);
         }
         countdownText.color = green;
-        countdownText.text = "Старт!";
+        countdownText.text = "Start!";
         Time.timeScale = 1;
         AudioSource.PlayClipAtPoint(startClip, Camera.main.transform.position);
         yield return new WaitForSecondsRealtime(0.5f);
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         AudioSource.PlayClipAtPoint(startClip, Camera.main.transform.position);
         panelGameOver.SetActive(true);
-        gameResultText.text = $"{winner} победил!";
+        gameResultText.text = $"{winner} won!";
     }
 
     public void Restart()

@@ -15,7 +15,7 @@ public class LapHandle : MonoBehaviour
     void Start()
     {
         gm = FindObjectOfType<GameManager>();
-        gm.LapText = $"Круг: {1}/{maxLaps}";
+        gm.LapText = $"Lap: {1}/{maxLaps}";
         gm.ProgressSliderMaxValue = checkpoints.Length;
         FinalCheckpoint = checkpoints.Length - 1;
         for (int i = 0; i < checkpoints.Length; i++)
@@ -33,7 +33,7 @@ public class LapHandle : MonoBehaviour
         {
             if (car.IsPlayer)
             {
-                gm.LapText = $"����: {car.CurrentLap}/{maxLaps}";
+                gm.LapText = $"Lap: {car.CurrentLap}/{maxLaps}";
                 gm.ProgressSliderValue = 0;
                 checkpoints[0].gameObject.GetComponent<MeshRenderer>().enabled = true;
                 GetComponent<MeshRenderer>().enabled = false;

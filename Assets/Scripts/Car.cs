@@ -14,17 +14,17 @@ public class Car : MonoBehaviour
     float speed, speedInput, turnInput;
     bool onGround;
 
-    [Header("Колеса:")]
+    [Header("Wheels:")]
     [SerializeField] float maxWheelTurn = 25f;
     [SerializeField] Transform leftFrontWheel;
     [SerializeField] Transform rightFrontWheel;
 
-    [Header("Пыль:")]
+    [Header("Dust:")]
     [SerializeField] float maxEmission = 30f;
     [SerializeField] ParticleSystem[] dustParticles;
     float emissionRate;
 
-    [Header("Боты:")]
+    [Header("Bots:")]
     [SerializeField] float botTurnStrength = 5f;
     [SerializeField] float randomOffset = 4f;
 
