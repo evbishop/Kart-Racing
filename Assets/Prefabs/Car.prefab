@@ -172,6 +172,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 5931982619383531728}
+  rigidbody: {fileID: 5931982618185228999}
+  gravityForce: 10
+  dragOnGround: 3
+  dragInAir: 0.1
 --- !u!1 &5931982619383531730
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,14 +226,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayer: 0
-  sphere: {fileID: 5931982618185228999}
+  sphere: {fileID: 5931982618185229003}
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
-  gravityForce: 10
   groundRayLength: 0.5
-  dragOnGround: 3
-  dragInAir: 0.1
   groundRayPoint: {fileID: 5931982618037009546}
   ground:
     serializedVersion: 2

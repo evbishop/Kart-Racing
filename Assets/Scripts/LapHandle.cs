@@ -42,7 +42,7 @@ public class LapHandle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Car car = other.GetComponent<Sphere>().Car;
+        Car car = other.GetComponent<CarSphere>().Car;
         if (car.CurrentCheckpoint != FinalCheckpoint) return;
         car.CurrentLap++;
         car.CurrentCheckpoint = -1;

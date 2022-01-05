@@ -5,14 +5,13 @@ using UnityEngine;
 public class Car : MonoBehaviour
 {
     [SerializeField] bool isPlayer;
-    [SerializeField] Rigidbody sphere;
+    [SerializeField] Transform sphere;
     [SerializeField] float forwardAccel = 8f, reverseAccel = 4f, turnStrength = 180f,
-        gravityForce = 10f, groundRayLength = 0.5f, dragOnGround = 3f, dragInAir = 0.1f;
+        groundRayLength = 0.5f;
     [SerializeField] Transform groundRayPoint;
     [SerializeField] LayerMask ground;
     AudioSource audioSource;
-    float speed, speedInput;
-    bool onGround;
+    float speedInput;
 
     [Header("Bots:")]
     [SerializeField] float botTurnStrength = 5f;
@@ -26,6 +25,10 @@ public class Car : MonoBehaviour
 
     public float EmissionRate { get; private set; }
 
+    public float Speed { get; private set; }
+
+    public bool OnGround { get; private set; }
+
     public bool IsPlayer { get { return isPlayer; } }
 
     public int CurrentCheckpoint { get; set; }
@@ -34,7 +37,6 @@ public class Car : MonoBehaviour
 
     void Start()
     {
-        sphere.transform.parent = null;
         audioSource = GetComponent<AudioSource>();
         audioSource.volume = 0;
         CurrentCheckpoint = -1;
@@ -51,7 +53,7 @@ public class Car : MonoBehaviour
     {
         if (isPlayer) PlayerMove();
         else BotMove();
-        transform.position = sphere.transform.position;
+        transform.position = sphere.position;
     }
 
     void PlayerMove()
@@ -61,54 +63,54 @@ public class Car : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, ground))
         {
-            onGround = true;
+            OnGround = true;
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
         }
-        else onGround = false;
+        else OnGround = false;
 
         speedInput = Input.GetAxis("Vertical");
         if (speedInput > 0)
         {
-            speed = speedInput * forwardAccel * 1000f;
+            Speed = speedInput * forwardAccel * 1000f;
             if (audioSource.volume < 1) audioSource.volume += Time.deltaTime;
             EmissionRate = 1f;
         }
         else if (speedInput < 0)
         {
-            speed = speedInput * reverseAccel * 1000f;
+            Speed = speedInput * reverseAccel * 1000f;
             if (audioSource.volume < 0.5) audioSource.volume += Time.deltaTime;
             else audioSource.volume -= Time.deltaTime;
             EmissionRate = 0.5f;
         }
         else
         {
-            if (onGround && audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
+            if (OnGround && audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
             EmissionRate = 0f;
         }
-        if (!onGround)
+        if (!OnGround)
         {
             if (audioSource.volume > 0.1) audioSource.volume -= Time.deltaTime;
             EmissionRate = 0f;
         }
 
         TurnInput = Input.GetAxis("Horizontal");
-        if (onGround) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3
+        if (OnGround) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3
             (0f, TurnInput * turnStrength * Time.deltaTime * speedInput, 0f));
     }
 
     void BotMove()
     {
-        speed = forwardAccel * 1000f;
+        Speed = forwardAccel * 1000f;
 
         RaycastHit hit;
         if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, ground))
         {
-            onGround = true;
+            OnGround = true;
             EmissionRate = 1f;
         }
         else
         {
-            onGround = false;
+            OnGround = false;
             EmissionRate = 0f;
         }
 
@@ -118,29 +120,12 @@ public class Car : MonoBehaviour
 
         Vector3 oldRotation = transform.rotation.eulerAngles;
 
-        if (onGround) transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * randomTurnStrength);
+        if (OnGround) transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * randomTurnStrength);
 
         if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f) TurnInput = Mathf.Lerp(TurnInput, -1, Time.deltaTime * 10);
         else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f) TurnInput = Mathf.Lerp(TurnInput, 1, Time.deltaTime * 10);
         else TurnInput = Mathf.Lerp(TurnInput, 0, Time.deltaTime * 10);
 
         transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-    }
-
-    void FixedUpdate()
-    {
-        if (onGround)
-        {
-            sphere.drag = dragOnGround;
-            if (Mathf.Abs(speed) > 0)
-            {
-                sphere.AddForce(transform.forward * speed);
-            }
-        }
-        else
-        {
-            sphere.drag = dragInAir;
-            sphere.AddForce(Vector3.down * gravityForce * 100f);
-        }
     }
 }

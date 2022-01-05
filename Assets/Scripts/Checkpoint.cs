@@ -47,7 +47,7 @@ public class Checkpoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Car car = other.GetComponent<Sphere>().Car;
+        Car car = other.GetComponent<CarSphere>().Car;
         if (car.CurrentCheckpoint != Index - 1) return;
         LapHandle lapHandle = FindObjectOfType<LapHandle>();
 
