@@ -7,7 +7,7 @@ public class LapHandle : MonoBehaviour
 {
     [SerializeField] int maxLaps = 3;
     [SerializeField] Checkpoint[] checkpoints;
-    GameManager gm;
+    ProgressUIHandler gm;
     MeshRenderer meshRenderer;
 
     public Checkpoint[] Checkpoints { get { return checkpoints; } }
@@ -21,7 +21,7 @@ public class LapHandle : MonoBehaviour
     {
         Checkpoint.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
         meshRenderer = GetComponent<MeshRenderer>();
-        gm = FindObjectOfType<GameManager>();
+        gm = FindObjectOfType<ProgressUIHandler>();
         gm.LapText = $"Lap: {1}/{maxLaps}";
         gm.ProgressSliderMaxValue = checkpoints.Length;
         FinalCheckpoint = checkpoints.Length - 1;
