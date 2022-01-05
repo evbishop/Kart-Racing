@@ -29,13 +29,13 @@ public class ProgressUIHandler : MonoBehaviour
     void Start()
     {
         Checkpoint.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
-        LapHandle.OnPlayerFinishedLap += HandlePlayerFinishedLap;
+        LapHandler.OnPlayerFinishedLap += HandlePlayerFinishedLap;
     }
 
     void OnDestroy()
     {
         Checkpoint.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
-        LapHandle.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
+        LapHandler.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
     }
 
     void HandlePlayerCrossedCheckpoint(int crossedIndex)

@@ -11,12 +11,12 @@ public class CarEngineVolumeHandler : MonoBehaviour
     void Start()
     {
         audioSource.volume = 0;
-        LapHandle.OnGameOver += HandleGameOver;
+        LapHandler.OnGameOver += HandleGameOver;
     }
 
     void OnDestroy()
     {
-        LapHandle.OnGameOver -= HandleGameOver;
+        LapHandler.OnGameOver -= HandleGameOver;
     }
 
     void HandleGameOver(string textForUI)

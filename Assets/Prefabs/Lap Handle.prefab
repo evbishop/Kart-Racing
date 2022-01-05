@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 592887032966334937}
   - component: {fileID: 592887032966334936}
   - component: {fileID: 592887032966334939}
-  - component: {fileID: 2800541807788496431}
+  - component: {fileID: 2154788815560264762}
   m_Layer: 0
   m_Name: Lap Handle
   m_TagString: Untagged
@@ -53,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -96,7 +97,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2800541807788496431
+--- !u!114 &2154788815560264762
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,6 +106,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 592887032966334938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 209588bd0736aea4ebe4fc79304e603f, type: 3}
+  m_Script: {fileID: 11500000, guid: 601ee424dec47104499ed1102b8885d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxLaps: 3
+  checkpoints: []

@@ -19,25 +19,17 @@ public class Car : MonoBehaviour
 
     public float TurnInput { get; private set; }
 
-    public float EmissionRate { get; private set; }
-
     public float Speed { get; private set; }
 
     public CarState State { get; private set; } = CarState.OnGroundAndNotMoving;
 
     public bool IsPlayer { get { return isPlayer; } }
 
-    public int CurrentCheckpoint { get; set; }
-
-    public int CurrentLap { get; set; }
-
     void Start()
     {
-        CurrentCheckpoint = -1;
-        CurrentLap = 1;
         if (!isPlayer)
         {
-            Destination = FindObjectOfType<LapHandle>().Checkpoints[0].gameObject.transform.position;
+            Destination = FindObjectOfType<LapHandler>().Checkpoints[0].gameObject.transform.position;
             Destination = new Vector3(
                 Destination.x + Random.Range(-randomOffset, randomOffset),
                 Destination.y, 

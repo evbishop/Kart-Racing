@@ -13,6 +13,7 @@ public class CarSphere : MonoBehaviour
 
     void Start()
     {
+        name = $"{transform.parent.name} Sphere";
         transform.parent = null;
     }
 

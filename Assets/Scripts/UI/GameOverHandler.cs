@@ -11,12 +11,12 @@ public class GameOverHandler : MonoBehaviour
 
     void Start()
     {
-        LapHandle.OnGameOver += HandleGameOver;
+        LapHandler.OnGameOver += HandleGameOver;
     }
 
     void OnDestroy()
     {
-        LapHandle.OnGameOver -= HandleGameOver;
+        LapHandler.OnGameOver -= HandleGameOver;
     }
 
     void HandleGameOver(string winner)

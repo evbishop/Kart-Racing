@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LapHandle : MonoBehaviour
+public class LapHandler : MonoBehaviour
 {
     [SerializeField] int maxLaps = 3;
     [SerializeField] Checkpoint[] checkpoints;
@@ -42,16 +42,17 @@ public class LapHandle : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        CarProgressHandler carProgress = other.GetComponent<CarProgressHandler>();
         Car car = other.GetComponent<CarSphere>().Car;
-        if (car.CurrentCheckpoint != FinalCheckpoint) return;
-        car.CurrentLap++;
-        car.CurrentCheckpoint = -1;
-        if (car.CurrentLap > maxLaps) OnGameOver?.Invoke(car.gameObject.name);
+        if (carProgress.CurrentCheckpoint != FinalCheckpoint) return;
+        carProgress.CurrentLap++;
+        carProgress.CurrentCheckpoint = -1;
+        if (carProgress.CurrentLap > maxLaps) OnGameOver?.Invoke(car.gameObject.name);
         else
         {
             if (car.IsPlayer)
             {
-                OnPlayerFinishedLap?.Invoke($"Lap: {car.CurrentLap}/{maxLaps}");
+                OnPlayerFinishedLap?.Invoke($"Lap: {carProgress.CurrentLap}/{maxLaps}");
                 meshRenderer.enabled = false;
             }
             else
