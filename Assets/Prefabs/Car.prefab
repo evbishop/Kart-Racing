@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &3552328208833817374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4601643806094702315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f878b4adf362054f9ab5f7949c17ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 5931982619383531728}
+  isRightWheel: 0
+  maxWheelTurn: 25
 --- !u!1 &5931982618037009547
 GameObject:
   m_ObjectHideFlags: 0
@@ -84,6 +99,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -205,6 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2c70153a29fd9478245ad09e6793db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   sphere: {fileID: 5931982618185228999}
   forwardAccel: 8
   reverseAccel: 4
@@ -217,13 +234,12 @@ MonoBehaviour:
   ground:
     serializedVersion: 2
     m_Bits: 64
-  maxWheelTurn: 25
-  leftFrontWheel: {fileID: 3616793583565513328}
-  rightFrontWheel: {fileID: 5972164080972769102}
   maxEmission: 30
   dustParticles:
   - {fileID: 5931982619133746839}
   - {fileID: 2741999959756991905}
+  botTurnStrength: 5
+  randomOffset: 4
 --- !u!82 &5931982619383531727
 AudioSource:
   m_ObjectHideFlags: 0
@@ -320,6 +336,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8092377173797017238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6575350510533187586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f878b4adf362054f9ab5f7949c17ec8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 5931982619383531728}
+  isRightWheel: 1
+  maxWheelTurn: 25
 --- !u!1001 &2741999959748341936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -580,13 +611,13 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
   m_PrefabInstance: {fileID: 5931982619435895950}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &3616793583565513328 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6945619734755880702, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
+--- !u!1 &4601643806094702315 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -1328860500621903259, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
   m_PrefabInstance: {fileID: 5931982619435895950}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &5972164080972769102 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 50596594197605312, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
+--- !u!1 &6575350510533187586 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8569518100099689332, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
   m_PrefabInstance: {fileID: 5931982619435895950}
   m_PrefabAsset: {fileID: 0}

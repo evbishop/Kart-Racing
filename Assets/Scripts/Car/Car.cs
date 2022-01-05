@@ -11,13 +11,8 @@ public class Car : MonoBehaviour
     [SerializeField] Transform groundRayPoint;
     [SerializeField] LayerMask ground;
     AudioSource audioSource;
-    float speed, speedInput, turnInput;
+    float speed, speedInput;
     bool onGround;
-
-    [Header("Wheels:")]
-    [SerializeField] float maxWheelTurn = 25f;
-    [SerializeField] Transform leftFrontWheel;
-    [SerializeField] Transform rightFrontWheel;
 
     [Header("Dust:")]
     [SerializeField] float maxEmission = 30f;
@@ -31,6 +26,8 @@ public class Car : MonoBehaviour
     public Vector3 Destination { get; set; }
 
     public float RandomOffset { get { return randomOffset; } }
+
+    public float TurnInput { get; private set; }
 
     public bool IsPlayer { get { return isPlayer; } }
 
@@ -57,11 +54,6 @@ public class Car : MonoBehaviour
     {
         if (isPlayer) PlayerMove();
         else BotMove();
-
-        rightFrontWheel.localRotation = Quaternion.Euler(rightFrontWheel.localRotation.eulerAngles.x,
-            turnInput * maxWheelTurn, rightFrontWheel.localRotation.eulerAngles.z);
-        leftFrontWheel.localRotation = Quaternion.Euler(leftFrontWheel.localRotation.eulerAngles.x,
-            turnInput * maxWheelTurn - 180, leftFrontWheel.localRotation.eulerAngles.z);
 
         foreach (ParticleSystem particle in dustParticles)
         {
@@ -108,9 +100,9 @@ public class Car : MonoBehaviour
             emissionRate = 0;
         }
 
-        turnInput = Input.GetAxis("Horizontal");
+        TurnInput = Input.GetAxis("Horizontal");
         if (onGround) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3
-            (0f, turnInput * turnStrength * Time.deltaTime * speedInput, 0f));
+            (0f, TurnInput * turnStrength * Time.deltaTime * speedInput, 0f));
     }
 
     void BotMove()
@@ -137,9 +129,9 @@ public class Car : MonoBehaviour
 
         if (onGround) transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * randomTurnStrength);
 
-        if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f) turnInput = Mathf.Lerp(turnInput, -1, Time.deltaTime * 10);
-        else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f) turnInput = Mathf.Lerp(turnInput, 1, Time.deltaTime * 10);
-        else turnInput = Mathf.Lerp(turnInput, 0, Time.deltaTime * 10);
+        if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f) TurnInput = Mathf.Lerp(TurnInput, -1, Time.deltaTime * 10);
+        else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f) TurnInput = Mathf.Lerp(TurnInput, 1, Time.deltaTime * 10);
+        else TurnInput = Mathf.Lerp(TurnInput, 0, Time.deltaTime * 10);
 
         transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
     }
