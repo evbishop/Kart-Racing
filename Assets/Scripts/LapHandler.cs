@@ -15,6 +15,7 @@ public class LapHandler : MonoBehaviour
     public int FinalCheckpoint { get; private set; }
 
     public static event Action<string> OnPlayerFinishedLap;
+    public static event Action<CarProgressHandler> OnCarFinishedLap;
     public static event Action<string> OnGameOver;
 
     void Start()
@@ -36,17 +37,17 @@ public class LapHandler : MonoBehaviour
 
     void HandlePlayerCrossedCheckpoint(int crossedIndex)
     {
-        if (crossedIndex == checkpoints.Length - 1)
+        if (crossedIndex == FinalCheckpoint)
             meshRenderer.enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
     {
         CarProgressHandler carProgress = other.GetComponent<CarProgressHandler>();
-        Car car = other.GetComponent<CarSphere>().Car;
         if (carProgress.CurrentCheckpoint != FinalCheckpoint) return;
-        carProgress.CurrentLap++;
-        carProgress.CurrentCheckpoint = -1;
+        OnCarFinishedLap?.Invoke(carProgress);
+
+        Car car = other.GetComponent<CarSphere>().Car;
         if (carProgress.CurrentLap > maxLaps) OnGameOver?.Invoke(car.gameObject.name);
         else
         {
