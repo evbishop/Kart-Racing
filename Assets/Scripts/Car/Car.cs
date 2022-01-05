@@ -7,7 +7,6 @@ public class Car : MonoBehaviour
     [SerializeField] bool isPlayer;
     [SerializeField] Transform sphere;
     [SerializeField] float forwardAccel = 8f, reverseAccel = 4f, turnStrength = 180f;
-    [SerializeField] AudioSource audioSource;
     [SerializeField] CarGroundChecker groundChecker;
 
     [Header("Bots:")]
@@ -24,6 +23,8 @@ public class Car : MonoBehaviour
 
     public float Speed { get; private set; }
 
+    public CarState State { get; private set; } = CarState.OnGroundAndNotMoving;
+
     public bool IsPlayer { get { return isPlayer; } }
 
     public int CurrentCheckpoint { get; set; }
@@ -32,14 +33,15 @@ public class Car : MonoBehaviour
 
     void Start()
     {
-        audioSource.volume = 0;
         CurrentCheckpoint = -1;
         CurrentLap = 1;
         if (!isPlayer)
         {
             Destination = FindObjectOfType<LapHandle>().Checkpoints[0].gameObject.transform.position;
-            Destination = new Vector3(Destination.x + Random.Range(-randomOffset, randomOffset),
-                Destination.y, Destination.z);
+            Destination = new Vector3(
+                Destination.x + Random.Range(-randomOffset, randomOffset),
+                Destination.y, 
+                Destination.z);
         }
     }
     
@@ -52,56 +54,60 @@ public class Car : MonoBehaviour
 
     void PlayerMove()
     {
-        if (Time.timeScale == 0) audioSource.volume = 0;
-
-        if (!groundChecker.OnGround)
-        {
-            if (audioSource.volume > 0.1) audioSource.volume -= Time.deltaTime;
-            EmissionRate = 0f;
-        }
-
         float speedInput = Input.GetAxis("Vertical");
         if (speedInput > 0)
         {
             Speed = speedInput * forwardAccel * 1000f;
-            if (audioSource.volume < 1) audioSource.volume += Time.deltaTime;
-            if (groundChecker.OnGround) EmissionRate = 1f;
+            if (groundChecker.OnGround)
+                State = CarState.OnGroundAndMovingForward;
         }
         else if (speedInput < 0)
         {
             Speed = speedInput * reverseAccel * 1000f;
-            if (audioSource.volume < 0.5) audioSource.volume += Time.deltaTime;
-            else audioSource.volume -= Time.deltaTime;
-            if (groundChecker.OnGround) EmissionRate = 0.5f;
+            if (groundChecker.OnGround)
+                State = CarState.OnGroundAndMovingBackward;
         }
         else if (groundChecker.OnGround)
-        {
-            EmissionRate = 0f;
-            if (audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
-        }
+            State = CarState.OnGroundAndNotMoving;
+
+        if (!groundChecker.OnGround)
+            State = CarState.OffGround;
 
         TurnInput = Input.GetAxis("Horizontal");
-        if (groundChecker.OnGround) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3
-            (0f, TurnInput * turnStrength * Time.deltaTime * speedInput, 0f));
+        if (groundChecker.OnGround) 
+            transform.rotation = Quaternion.Euler(
+                transform.rotation.eulerAngles + new Vector3(
+                    0f,
+                    TurnInput * turnStrength * Time.deltaTime * speedInput,
+                    0f));
     }
 
     void BotMove()
     {
         Speed = forwardAccel * 1000f;
-
         if (groundChecker.OnGround) EmissionRate = 1f;
         else EmissionRate = 0f;
+        RotateBotTowardsDestination();
+    }
 
+    void RotateBotTowardsDestination()
+    {
         Vector3 relativePos = Destination - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(relativePos);
         float randomTurnStrength = Random.Range(botTurnStrength, botTurnStrength * 2);
 
         Vector3 oldRotation = transform.rotation.eulerAngles;
 
-        if (groundChecker.OnGround) transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * randomTurnStrength);
+        if (groundChecker.OnGround)
+            transform.rotation = Quaternion.Lerp(
+                transform.rotation,
+                targetRotation,
+                Time.deltaTime * randomTurnStrength);
 
-        if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f) TurnInput = Mathf.Lerp(TurnInput, -1, Time.deltaTime * 10);
-        else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f) TurnInput = Mathf.Lerp(TurnInput, 1, Time.deltaTime * 10);
+        if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f)
+            TurnInput = Mathf.Lerp(TurnInput, -1, Time.deltaTime * 10);
+        else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f)
+            TurnInput = Mathf.Lerp(TurnInput, 1, Time.deltaTime * 10);
         else TurnInput = Mathf.Lerp(TurnInput, 0, Time.deltaTime * 10);
     }
 }

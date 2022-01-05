@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 5931982619383531729}
   - component: {fileID: 5931982619383531728}
   - component: {fileID: 5201295819794229644}
+  - component: {fileID: 8642084063164316669}
   - component: {fileID: 5931982619383531727}
   m_Layer: 0
   m_Name: Car
@@ -232,7 +233,6 @@ MonoBehaviour:
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
-  audioSource: {fileID: 5931982619383531727}
   groundChecker: {fileID: 5201295819794229644}
   botTurnStrength: 5
   randomOffset: 4
@@ -253,6 +253,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundRayLength: 0.5
+--- !u!114 &8642084063164316669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931982619383531730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c06fd061b3a54343a70eeccfde5d9b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  car: {fileID: 5931982619383531728}
+  audioSource: {fileID: 5931982619383531727}
 --- !u!82 &5931982619383531727
 AudioSource:
   m_ObjectHideFlags: 0
