@@ -10,7 +10,7 @@ public class Car : MonoBehaviour
         groundRayLength = 0.5f;
     [SerializeField] Transform groundRayPoint;
     [SerializeField] LayerMask ground;
-    AudioSource audioSource;
+    [SerializeField] AudioSource audioSource;
 
     [Header("Bots:")]
     [SerializeField] float botTurnStrength = 5f;
@@ -36,7 +36,6 @@ public class Car : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         audioSource.volume = 0;
         CurrentCheckpoint = -1;
         CurrentLap = 1;
