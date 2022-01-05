@@ -69,11 +69,9 @@ public class GameManager : MonoBehaviour
     IEnumerator StartLevel()
     {
         Time.timeScale = 0;
-        int countdown = maxCountdown + 1;
         countdownText.color = red;
-        while (countdown > 1)
+        for (int countdown = maxCountdown; countdown > 0; countdown--)
         {
-            countdown--;
             countdownText.text = countdown.ToString();
             AudioSource.PlayClipAtPoint(countdownClip, Camera.main.transform.position);
             yield return new WaitForSecondsRealtime(1f);
