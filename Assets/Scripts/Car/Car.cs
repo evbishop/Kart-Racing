@@ -55,38 +55,49 @@ public class Car : MonoBehaviour
     void PlayerMove()
     {
         float speedInput = Input.GetAxis("Vertical");
-        if (speedInput > 0)
-        {
-            Speed = speedInput * forwardAccel * 1000f;
-            if (groundChecker.OnGround)
-                State = CarState.OnGroundAndMovingForward;
-        }
-        else if (speedInput < 0)
-        {
-            Speed = speedInput * reverseAccel * 1000f;
-            if (groundChecker.OnGround)
-                State = CarState.OnGroundAndMovingBackward;
-        }
-        else if (groundChecker.OnGround)
-            State = CarState.OnGroundAndNotMoving;
-
-        if (!groundChecker.OnGround)
-            State = CarState.OffGround;
+        ProcessPlayerSpeedInput(speedInput);
 
         TurnInput = Input.GetAxis("Horizontal");
-        if (groundChecker.OnGround) 
-            transform.rotation = Quaternion.Euler(
-                transform.rotation.eulerAngles + new Vector3(
-                    0f,
-                    TurnInput * turnStrength * Time.deltaTime * speedInput,
-                    0f));
+        if (groundChecker.OnGround)
+            ProcessPlayerTurnInput(speedInput);
+    }
+
+    void ProcessPlayerSpeedInput(float speedInput)
+    {
+        if (!groundChecker.OnGround)
+            State = CarState.OffGround;
+        else
+        {
+            if (speedInput > 0)
+            {
+                Speed = speedInput * forwardAccel * 1000f;
+                if (groundChecker.OnGround)
+                    State = CarState.OnGroundAndMovingForward;
+            }
+            else if (speedInput < 0)
+            {
+                Speed = speedInput * reverseAccel * 1000f;
+                if (groundChecker.OnGround)
+                    State = CarState.OnGroundAndMovingBackward;
+            }
+            else State = CarState.OnGroundAndNotMoving;
+        }
+    }
+
+    void ProcessPlayerTurnInput(float speedInput)
+    {
+        transform.rotation = Quaternion.Euler(
+            transform.rotation.eulerAngles + new Vector3(
+                0f,
+                TurnInput * turnStrength * Time.deltaTime * speedInput,
+                0f));
     }
 
     void BotMove()
     {
         Speed = forwardAccel * 1000f;
-        if (groundChecker.OnGround) EmissionRate = 1f;
-        else EmissionRate = 0f;
+        if (groundChecker.OnGround) State = CarState.OnGroundAndMovingForward;
+        else State = CarState.OffGround;
         RotateBotTowardsDestination();
     }
 
