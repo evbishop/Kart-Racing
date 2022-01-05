@@ -5,12 +5,12 @@ using UnityEngine;
 public class CarDust : MonoBehaviour
 {
     [SerializeField] Car car;
-    [SerializeField] ParticleSystem particleSystem;
+    [SerializeField] ParticleSystem particle;
     [SerializeField] float maxEmission = 30f;
 
     void Update()
     {
-        var emissionModule = particleSystem.emission;
+        var emissionModule = particle.emission;
         emissionModule.rateOverTime = car.EmissionRate * maxEmission;
     }
 }

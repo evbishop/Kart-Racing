@@ -6,7 +6,7 @@ public class CarSphere : MonoBehaviour
 {
     [SerializeField] Car car;
     [SerializeField] CarGroundChecker groundChecker;
-    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] Rigidbody rb;
     [SerializeField] float gravityForce = 10f, dragOnGround = 3f, dragInAir = 0.1f;
 
     public Car Car { get { return car; } }
@@ -20,14 +20,14 @@ public class CarSphere : MonoBehaviour
     {
         if (groundChecker.OnGround)
         {
-            rigidbody.drag = dragOnGround;
+            rb.drag = dragOnGround;
             if (Mathf.Abs(Car.Speed) > 0)
-                rigidbody.AddForce(Car.transform.forward * Car.Speed);
+                rb.AddForce(Car.transform.forward * Car.Speed);
         }
         else
         {
-            rigidbody.drag = dragInAir;
-            rigidbody.AddForce(Vector3.down * gravityForce * 100f);
+            rb.drag = dragInAir;
+            rb.AddForce(Vector3.down * gravityForce * 100f);
         }
     }
 }

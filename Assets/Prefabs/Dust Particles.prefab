@@ -4829,5 +4829,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 0}
-  particleSystem: {fileID: 8385465754105769511}
+  particle: {fileID: 8385465754105769511}
   maxEmission: 30

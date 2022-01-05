@@ -173,7 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   car: {fileID: 5931982619383531728}
   groundChecker: {fileID: 5201295819794229644}
-  rigidbody: {fileID: 5931982618185228999}
+  rb: {fileID: 5931982618185228999}
   gravityForce: 10
   dragOnGround: 3
   dragInAir: 0.1
