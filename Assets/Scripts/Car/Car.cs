@@ -14,11 +14,6 @@ public class Car : MonoBehaviour
     float speed, speedInput;
     bool onGround;
 
-    [Header("Dust:")]
-    [SerializeField] float maxEmission = 30f;
-    [SerializeField] ParticleSystem[] dustParticles;
-    float emissionRate;
-
     [Header("Bots:")]
     [SerializeField] float botTurnStrength = 5f;
     [SerializeField] float randomOffset = 4f;
@@ -28,6 +23,8 @@ public class Car : MonoBehaviour
     public float RandomOffset { get { return randomOffset; } }
 
     public float TurnInput { get; private set; }
+
+    public float EmissionRate { get; private set; }
 
     public bool IsPlayer { get { return isPlayer; } }
 
@@ -54,12 +51,6 @@ public class Car : MonoBehaviour
     {
         if (isPlayer) PlayerMove();
         else BotMove();
-
-        foreach (ParticleSystem particle in dustParticles)
-        {
-            var emissionModule = particle.emission;
-            emissionModule.rateOverTime = emissionRate;
-        }
         transform.position = sphere.transform.position;
     }
 
@@ -80,24 +71,24 @@ public class Car : MonoBehaviour
         {
             speed = speedInput * forwardAccel * 1000f;
             if (audioSource.volume < 1) audioSource.volume += Time.deltaTime;
-            emissionRate = maxEmission;
+            EmissionRate = 1f;
         }
         else if (speedInput < 0)
         {
             speed = speedInput * reverseAccel * 1000f;
             if (audioSource.volume < 0.5) audioSource.volume += Time.deltaTime;
             else audioSource.volume -= Time.deltaTime;
-            emissionRate = maxEmission / 2;
+            EmissionRate = 0.5f;
         }
         else
         {
             if (onGround && audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
-            emissionRate = 0;
+            EmissionRate = 0f;
         }
         if (!onGround)
         {
             if (audioSource.volume > 0.1) audioSource.volume -= Time.deltaTime;
-            emissionRate = 0;
+            EmissionRate = 0f;
         }
 
         TurnInput = Input.GetAxis("Horizontal");
@@ -113,12 +104,12 @@ public class Car : MonoBehaviour
         if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, ground))
         {
             onGround = true;
-            emissionRate = maxEmission;
+            EmissionRate = 1f;
         }
         else
         {
             onGround = false;
-            emissionRate = 0;
+            EmissionRate = 0f;
         }
 
         Vector3 relativePos = Destination - transform.position;
