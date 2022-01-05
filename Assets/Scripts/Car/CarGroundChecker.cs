@@ -17,9 +17,6 @@ public class CarGroundChecker : MonoBehaviour
             OnGround = true;
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
         }
-        else
-        {
-            OnGround = false;
-        }
+        else OnGround = false;
     }
 }

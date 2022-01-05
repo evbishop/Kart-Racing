@@ -89,14 +89,8 @@ public class Car : MonoBehaviour
     {
         Speed = forwardAccel * 1000f;
 
-        if (groundChecker.OnGround)
-        {
-            EmissionRate = 1f;
-        }
-        else
-        {
-            EmissionRate = 0f;
-        }
+        if (groundChecker.OnGround) EmissionRate = 1f;
+        else EmissionRate = 0f;
 
         Vector3 relativePos = Destination - transform.position;
         Quaternion targetRotation = Quaternion.LookRotation(relativePos);
@@ -109,7 +103,5 @@ public class Car : MonoBehaviour
         if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f) TurnInput = Mathf.Lerp(TurnInput, -1, Time.deltaTime * 10);
         else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f) TurnInput = Mathf.Lerp(TurnInput, 1, Time.deltaTime * 10);
         else TurnInput = Mathf.Lerp(TurnInput, 0, Time.deltaTime * 10);
-
-        //transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
     }
 }
