@@ -15,6 +15,7 @@ public class LapHandle : MonoBehaviour
     public int FinalCheckpoint { get; private set; }
 
     public static event Action<string> OnPlayerFinishedLap;
+    public static event Action<string> OnGameOver;
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class LapHandle : MonoBehaviour
         if (car.CurrentCheckpoint != FinalCheckpoint) return;
         car.CurrentLap++;
         car.CurrentCheckpoint = -1;
-        if (car.CurrentLap > maxLaps) gm.GameOver(car.gameObject.name);
+        if (car.CurrentLap > maxLaps) OnGameOver?.Invoke(car.gameObject.name);
         else
         {
             if (car.IsPlayer)

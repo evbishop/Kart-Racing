@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         Checkpoint.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
         LapHandle.OnPlayerFinishedLap += HandlePlayerFinishedLap;
+        LapHandle.OnGameOver += HandleGameOver;
         StartCoroutine(StartLevel());
     }
 
@@ -42,6 +44,15 @@ public class GameManager : MonoBehaviour
     {
         Checkpoint.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
         LapHandle.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
+        LapHandle.OnGameOver -= HandleGameOver;
+    }
+
+    void HandleGameOver(string winner)
+    {
+        Time.timeScale = 0;
+        AudioSource.PlayClipAtPoint(startClip, Camera.main.transform.position);
+        panelGameOver.SetActive(true);
+        gameResultText.text = $"{winner} won!";
     }
 
     void HandlePlayerCrossedCheckpoint(int crossedIndex)
@@ -73,14 +84,6 @@ public class GameManager : MonoBehaviour
         AudioSource.PlayClipAtPoint(startClip, Camera.main.transform.position);
         yield return new WaitForSecondsRealtime(0.5f);
         countdownText.text = "";
-    }
-
-    public void GameOver(string winner)
-    {
-        Time.timeScale = 0;
-        AudioSource.PlayClipAtPoint(startClip, Camera.main.transform.position);
-        panelGameOver.SetActive(true);
-        gameResultText.text = $"{winner} won!";
     }
 
     public void Restart()
