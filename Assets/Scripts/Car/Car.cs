@@ -6,11 +6,9 @@ public class Car : MonoBehaviour
 {
     [SerializeField] bool isPlayer;
     [SerializeField] Transform sphere;
-    [SerializeField] float forwardAccel = 8f, reverseAccel = 4f, turnStrength = 180f,
-        groundRayLength = 0.5f;
-    [SerializeField] Transform groundRayPoint;
-    [SerializeField] LayerMask ground;
+    [SerializeField] float forwardAccel = 8f, reverseAccel = 4f, turnStrength = 180f;
     [SerializeField] AudioSource audioSource;
+    [SerializeField] CarGroundChecker groundChecker;
 
     [Header("Bots:")]
     [SerializeField] float botTurnStrength = 5f;
@@ -25,8 +23,6 @@ public class Car : MonoBehaviour
     public float EmissionRate { get; private set; }
 
     public float Speed { get; private set; }
-
-    public bool OnGround { get; private set; }
 
     public bool IsPlayer { get { return isPlayer; } }
 
@@ -58,14 +54,8 @@ public class Car : MonoBehaviour
     {
         if (Time.timeScale == 0) audioSource.volume = 0;
 
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out RaycastHit hit, groundRayLength, ground))
+        if (!groundChecker.OnGround)
         {
-            OnGround = true;
-            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-        }
-        else
-        {
-            OnGround = false;
             if (audioSource.volume > 0.1) audioSource.volume -= Time.deltaTime;
             EmissionRate = 0f;
         }
@@ -75,23 +65,23 @@ public class Car : MonoBehaviour
         {
             Speed = speedInput * forwardAccel * 1000f;
             if (audioSource.volume < 1) audioSource.volume += Time.deltaTime;
-            if (OnGround) EmissionRate = 1f;
+            if (groundChecker.OnGround) EmissionRate = 1f;
         }
         else if (speedInput < 0)
         {
             Speed = speedInput * reverseAccel * 1000f;
             if (audioSource.volume < 0.5) audioSource.volume += Time.deltaTime;
             else audioSource.volume -= Time.deltaTime;
-            if (OnGround) EmissionRate = 0.5f;
+            if (groundChecker.OnGround) EmissionRate = 0.5f;
         }
-        else if (OnGround)
+        else if (groundChecker.OnGround)
         {
             EmissionRate = 0f;
             if (audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
         }
 
         TurnInput = Input.GetAxis("Horizontal");
-        if (OnGround) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3
+        if (groundChecker.OnGround) transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3
             (0f, TurnInput * turnStrength * Time.deltaTime * speedInput, 0f));
     }
 
@@ -99,14 +89,12 @@ public class Car : MonoBehaviour
     {
         Speed = forwardAccel * 1000f;
 
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out RaycastHit hit, groundRayLength, ground))
+        if (groundChecker.OnGround)
         {
-            OnGround = true;
             EmissionRate = 1f;
         }
         else
         {
-            OnGround = false;
             EmissionRate = 0f;
         }
 
@@ -116,12 +104,12 @@ public class Car : MonoBehaviour
 
         Vector3 oldRotation = transform.rotation.eulerAngles;
 
-        if (OnGround) transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * randomTurnStrength);
+        if (groundChecker.OnGround) transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * randomTurnStrength);
 
         if ((oldRotation - transform.rotation.eulerAngles).y > 0.05f) TurnInput = Mathf.Lerp(TurnInput, -1, Time.deltaTime * 10);
         else if ((oldRotation - transform.rotation.eulerAngles).y < -0.05f) TurnInput = Mathf.Lerp(TurnInput, 1, Time.deltaTime * 10);
         else TurnInput = Mathf.Lerp(TurnInput, 0, Time.deltaTime * 10);
 
-        transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+        //transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class CarSphere : MonoBehaviour
 {
     [SerializeField] Car car;
+    [SerializeField] CarGroundChecker groundChecker;
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] float gravityForce = 10f, dragOnGround = 3f, dragInAir = 0.1f;
 
@@ -17,7 +18,7 @@ public class CarSphere : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (Car.OnGround)
+        if (groundChecker.OnGround)
         {
             rigidbody.drag = dragOnGround;
             if (Mathf.Abs(Car.Speed) > 0)

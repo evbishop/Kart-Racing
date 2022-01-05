@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 5931982619383531728}
+  groundChecker: {fileID: 5201295819794229644}
   rigidbody: {fileID: 5931982618185228999}
   gravityForce: 10
   dragOnGround: 3
@@ -186,6 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5931982619383531729}
   - component: {fileID: 5931982619383531728}
+  - component: {fileID: 5201295819794229644}
   - component: {fileID: 5931982619383531727}
   m_Layer: 0
   m_Name: Car
@@ -230,14 +232,27 @@ MonoBehaviour:
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
-  groundRayLength: 0.5
+  audioSource: {fileID: 5931982619383531727}
+  groundChecker: {fileID: 5201295819794229644}
+  botTurnStrength: 5
+  randomOffset: 4
+--- !u!114 &5201295819794229644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931982619383531730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12f36d51299c1c341a55f95a193c460b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   groundRayPoint: {fileID: 5931982618037009546}
   ground:
     serializedVersion: 2
     m_Bits: 64
-  audioSource: {fileID: 5931982619383531727}
-  botTurnStrength: 5
-  randomOffset: 4
+  groundRayLength: 0.5
 --- !u!82 &5931982619383531727
 AudioSource:
   m_ObjectHideFlags: 0
@@ -250,7 +265,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 9d80c9c2d8a58144eb5fd80af082e34e, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0
