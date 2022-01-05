@@ -33,7 +33,18 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Checkpoint.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
         StartCoroutine(StartLevel());
+    }
+
+    void OnDestroy()
+    {
+        Checkpoint.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+    }
+
+    void HandlePlayerCrossedCheckpoint(int crossedIndex)
+    {
+        ProgressSliderValue++;
     }
 
     IEnumerator StartLevel()

@@ -1,10 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
+    MeshRenderer meshRenderer;
     public int Index { get; set; }
+
+    public static event Action<int> OnPlayerCrossedCheckpoint;
+
+    void Start()
+    {
+        OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
+        meshRenderer = GetComponent<MeshRenderer>();
+    }
+
+    void OnDestroy()
+    {
+        OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+    }
+
+    void HandlePlayerCrossedCheckpoint(int crossedIndex)
+    {
+        if (crossedIndex == Index - 1) meshRenderer.enabled = true;
+        else if (crossedIndex == Index) meshRenderer.enabled = false;
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -13,21 +34,15 @@ public class Checkpoint : MonoBehaviour
         LapHandle lapHandle = FindObjectOfType<LapHandle>();
 
         car.CurrentCheckpoint = Index;
-        if (car.IsPlayer)
-        {
-            FindObjectOfType<GameManager>().ProgressSliderValue++;
-            if (lapHandle.FinalCheckpoint == Index) lapHandle.gameObject.GetComponent<MeshRenderer>().enabled = true;
-            else lapHandle.Checkpoints[Index + 1].gameObject.GetComponent<MeshRenderer>().enabled = true;
-            GetComponent<MeshRenderer>().enabled = false;
-        }
+        if (car.IsPlayer) OnPlayerCrossedCheckpoint?.Invoke(Index);
         else
         {
             car.Destination = lapHandle.FinalCheckpoint == Index
                 ? lapHandle.gameObject.transform.position
                 : lapHandle.Checkpoints[Index + 1].gameObject.transform.position;
             car.Destination = new Vector3(
-                car.Destination.x + Random.Range(-car.RandomOffset, car.RandomOffset), 
-                car.Destination.y, 
+                car.Destination.x + UnityEngine.Random.Range(-car.RandomOffset, car.RandomOffset), 
+                car.Destination.y,
                 car.Destination.z);
         }
     }

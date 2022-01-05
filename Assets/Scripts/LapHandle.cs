@@ -7,6 +7,7 @@ public class LapHandle : MonoBehaviour
     [SerializeField] int maxLaps = 3;
     [SerializeField] Checkpoint[] checkpoints;
     GameManager gm;
+    MeshRenderer meshRenderer;
 
     public Checkpoint[] Checkpoints { get { return checkpoints; } }
 
@@ -14,12 +15,25 @@ public class LapHandle : MonoBehaviour
 
     void Start()
     {
+        Checkpoint.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
+        meshRenderer = GetComponent<MeshRenderer>();
         gm = FindObjectOfType<GameManager>();
         gm.LapText = $"Lap: {1}/{maxLaps}";
         gm.ProgressSliderMaxValue = checkpoints.Length;
         FinalCheckpoint = checkpoints.Length - 1;
         for (int i = 0; i < checkpoints.Length; i++)
             checkpoints[i].Index = i;
+    }
+
+    void OnDestroy()
+    {
+        Checkpoint.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+    }
+
+    void HandlePlayerCrossedCheckpoint(int crossedIndex)
+    {
+        if (crossedIndex == checkpoints.Length - 1)
+            meshRenderer.enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
@@ -36,7 +50,7 @@ public class LapHandle : MonoBehaviour
                 gm.LapText = $"Lap: {car.CurrentLap}/{maxLaps}";
                 gm.ProgressSliderValue = 0;
                 checkpoints[0].gameObject.GetComponent<MeshRenderer>().enabled = true;
-                GetComponent<MeshRenderer>().enabled = false;
+                meshRenderer.enabled = false;
             }
             else
             {
