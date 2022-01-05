@@ -11,7 +11,6 @@ public class Car : MonoBehaviour
     [SerializeField] Transform groundRayPoint;
     [SerializeField] LayerMask ground;
     AudioSource audioSource;
-    float speedInput;
 
     [Header("Bots:")]
     [SerializeField] float botTurnStrength = 5f;
@@ -60,37 +59,36 @@ public class Car : MonoBehaviour
     {
         if (Time.timeScale == 0) audioSource.volume = 0;
 
-        RaycastHit hit;
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, ground))
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, out RaycastHit hit, groundRayLength, ground))
         {
             OnGround = true;
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
         }
-        else OnGround = false;
+        else
+        {
+            OnGround = false;
+            if (audioSource.volume > 0.1) audioSource.volume -= Time.deltaTime;
+            EmissionRate = 0f;
+        }
 
-        speedInput = Input.GetAxis("Vertical");
+        float speedInput = Input.GetAxis("Vertical");
         if (speedInput > 0)
         {
             Speed = speedInput * forwardAccel * 1000f;
             if (audioSource.volume < 1) audioSource.volume += Time.deltaTime;
-            EmissionRate = 1f;
+            if (OnGround) EmissionRate = 1f;
         }
         else if (speedInput < 0)
         {
             Speed = speedInput * reverseAccel * 1000f;
             if (audioSource.volume < 0.5) audioSource.volume += Time.deltaTime;
             else audioSource.volume -= Time.deltaTime;
-            EmissionRate = 0.5f;
+            if (OnGround) EmissionRate = 0.5f;
         }
-        else
+        else if (OnGround)
         {
-            if (OnGround && audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
             EmissionRate = 0f;
-        }
-        if (!OnGround)
-        {
-            if (audioSource.volume > 0.1) audioSource.volume -= Time.deltaTime;
-            EmissionRate = 0f;
+            if (audioSource.volume > 0.1) audioSource.volume -= 2 * Time.deltaTime;
         }
 
         TurnInput = Input.GetAxis("Horizontal");
@@ -102,8 +100,7 @@ public class Car : MonoBehaviour
     {
         Speed = forwardAccel * 1000f;
 
-        RaycastHit hit;
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, ground))
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, out RaycastHit hit, groundRayLength, ground))
         {
             OnGround = true;
             EmissionRate = 1f;
