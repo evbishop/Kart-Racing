@@ -6,7 +6,18 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     MeshRenderer meshRenderer;
-    public int Index { get; set; }
+    int index;
+
+    public int Index 
+    { 
+        get { return index; } 
+        set
+        {
+            index = value;
+            if (index == 0)
+                LapHandle.OnPlayerFinishedLap += HandlePlayerFinishedLap;
+        } 
+    }
 
     public static event Action<int> OnPlayerCrossedCheckpoint;
 
@@ -19,6 +30,13 @@ public class Checkpoint : MonoBehaviour
     void OnDestroy()
     {
         OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+        if (Index == 0)
+            LapHandle.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
+    }
+
+    void HandlePlayerFinishedLap(string textForUI)
+    {
+        meshRenderer.enabled = true;
     }
 
     void HandlePlayerCrossedCheckpoint(int crossedIndex)

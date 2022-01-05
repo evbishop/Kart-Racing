@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class LapHandle : MonoBehaviour
     public Checkpoint[] Checkpoints { get { return checkpoints; } }
 
     public int FinalCheckpoint { get; private set; }
+
+    public static event Action<string> OnPlayerFinishedLap;
 
     void Start()
     {
@@ -47,16 +50,14 @@ public class LapHandle : MonoBehaviour
         {
             if (car.IsPlayer)
             {
-                gm.LapText = $"Lap: {car.CurrentLap}/{maxLaps}";
-                gm.ProgressSliderValue = 0;
-                checkpoints[0].gameObject.GetComponent<MeshRenderer>().enabled = true;
+                OnPlayerFinishedLap?.Invoke($"Lap: {car.CurrentLap}/{maxLaps}");
                 meshRenderer.enabled = false;
             }
             else
             {
                 car.Destination = checkpoints[0].gameObject.transform.position;
                 car.Destination = new Vector3(
-                    car.Destination.x + Random.Range(-car.RandomOffset, car.RandomOffset),
+                    car.Destination.x + UnityEngine.Random.Range(-car.RandomOffset, car.RandomOffset),
                     car.Destination.y,
                     car.Destination.z);
             }
