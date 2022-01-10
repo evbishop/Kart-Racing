@@ -6,13 +6,12 @@ using UnityEngine;
 public class CarProgressHandler : MonoBehaviour
 {
     [SerializeField] Car car;
-    LapHandler lapHandler;
 
     public int CurrentCheckpoint { get; private set; }
     public int CurrentLap { get; private set; }
 
     public static event Action<int> OnPlayerCrossedCheckpoint;
-    public static event Action<string> OnPlayerFinishedLap;
+    public static event Action<int> OnPlayerFinishedLap;
     public event Action<CarBot, int> OnBotCrossedCheckpoint;
     public event Action<CarBot> OnBotFinishedLap;
 
@@ -20,7 +19,6 @@ public class CarProgressHandler : MonoBehaviour
     {
         CurrentCheckpoint = -1;
         CurrentLap = 1;
-        lapHandler = FindObjectOfType<LapHandler>();
         Checkpoint.OnCarCrossedCheckpoint += HandleCarCrossedCheckpoint;
         LapHandler.OnCarFinishedLap += HandleCarFinishedLap;
     }
@@ -48,7 +46,7 @@ public class CarProgressHandler : MonoBehaviour
         CurrentCheckpoint = -1;
         CurrentLap++;
         if (car is CarPlayer)
-            OnPlayerFinishedLap?.Invoke($"Lap: {CurrentLap}/{lapHandler.MaxLaps}");
+            OnPlayerFinishedLap?.Invoke(CurrentLap);
         else if (car is CarBot bot)
             OnBotFinishedLap?.Invoke(bot);
     }

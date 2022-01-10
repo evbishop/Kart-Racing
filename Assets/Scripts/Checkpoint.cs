@@ -33,7 +33,7 @@ public class Checkpoint : MonoBehaviour
             CarProgressHandler.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
     }
 
-    void HandlePlayerFinishedLap(string textForUI)
+    void HandlePlayerFinishedLap(int currentLap)
     {
         meshRenderer.enabled = true;
     }

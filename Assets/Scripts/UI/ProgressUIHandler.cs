@@ -7,11 +7,12 @@ public class ProgressUIHandler : MonoBehaviour
 {
     [SerializeField] Text lapText;
     [SerializeField] Slider progressSlider;
+    int numOfLaps = 0;
     
     public string LapText
     {
         get { return lapText.text; }
-        set { lapText.text = value; }
+        set { lapText.text = $"Laps: {value}/{numOfLaps}"; }
     }
 
     public float ProgressSliderValue
@@ -40,9 +41,10 @@ public class ProgressUIHandler : MonoBehaviour
         LapHandler.OnLapsTextUpdated -= HandleLapsTextUpdated;
     }
 
-    void HandleLapsTextUpdated(string text, int sliderMaxValue)
+    void HandleLapsTextUpdated(int currentLap, int numOfLaps, int sliderMaxValue)
     {
-        LapText = text;
+        this.numOfLaps = numOfLaps;
+        LapText = currentLap.ToString();
         ProgressSliderMaxValue = sliderMaxValue;
     }
 
@@ -51,9 +53,9 @@ public class ProgressUIHandler : MonoBehaviour
         ProgressSliderValue++;
     }
 
-    void HandlePlayerFinishedLap(string textForUI)
+    void HandlePlayerFinishedLap(int currentLap)
     {
-        LapText = textForUI;
+        LapText = currentLap.ToString();
         ProgressSliderValue = 0;
     }
 }
