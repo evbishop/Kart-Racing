@@ -4,21 +4,18 @@ using UnityEngine;
 
 public class CarBot : Car
 {
-    [SerializeField] float botTurnStrength = 5f, randomOffset = 4f;
+    [SerializeField] float botTurnStrength = 5f;
     [SerializeField] CarProgressHandler progressHandler;
+    LapHandler lapHandler;
     
-    public float RandomOffset { get { return randomOffset; } }
     public Vector3 Destination { get; set; }
 
     void Start()
     {
         progressHandler.OnBotFinishedLap += HandleBotFinishedLap;
         progressHandler.OnBotCrossedCheckpoint += HandleBotCrossedCheckpoint;
-        Destination = FindObjectOfType<LapHandler>().Checkpoints[0].gameObject.transform.position;
-        Destination = new Vector3(
-            Destination.x + Random.Range(-randomOffset, randomOffset),
-            Destination.y,
-            Destination.z);
+        lapHandler = FindObjectOfType<LapHandler>();
+        Destination = lapHandler.Checkpoints[0].GetRandomDestination();
     }
 
     void OnDestroy()
@@ -29,26 +26,16 @@ public class CarBot : Car
 
     void HandleBotFinishedLap(CarBot bot)
     {
-        LapHandler lapHandler = FindObjectOfType<LapHandler>();
         var checkpoints = lapHandler.Checkpoints;
         Destination = checkpoints[0].gameObject.transform.position;
-        Destination = new Vector3(
-            Destination.x + UnityEngine.Random.Range(-RandomOffset, RandomOffset),
-            Destination.y,
-            Destination.z);
     }
 
     void HandleBotCrossedCheckpoint(CarBot bot, int checkpointIndex)
     {
-        LapHandler lapHandler = FindObjectOfType<LapHandler>();
         var checkpoints = lapHandler.Checkpoints;
         Destination = lapHandler.FinalCheckpoint == checkpointIndex
             ? lapHandler.gameObject.transform.position
-            : checkpoints[checkpointIndex + 1].gameObject.transform.position;
-        Destination = new Vector3(
-            Destination.x + UnityEngine.Random.Range(-RandomOffset, RandomOffset),
-            Destination.y,
-            Destination.z);
+            : checkpoints[checkpointIndex + 1].GetRandomDestination();
     }
 
     void Update()

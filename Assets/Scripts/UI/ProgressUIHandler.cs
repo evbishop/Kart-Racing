@@ -12,7 +12,7 @@ public class ProgressUIHandler : MonoBehaviour
     public string LapText
     {
         get { return lapText.text; }
-        set { lapText.text = $"Laps: {value}/{numOfLaps}"; }
+        set { lapText.text = $"Lap: {value}/{numOfLaps}"; }
     }
 
     public float ProgressSliderValue
@@ -55,6 +55,7 @@ public class ProgressUIHandler : MonoBehaviour
 
     void HandlePlayerFinishedLap(int currentLap)
     {
+        if (currentLap > numOfLaps) return;
         LapText = currentLap.ToString();
         ProgressSliderValue = 0;
     }

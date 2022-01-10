@@ -6,6 +6,7 @@ using UnityEngine;
 public class Checkpoint : MonoBehaviour
 {
     [SerializeField] MeshRenderer meshRenderer;
+    [SerializeField] float randomOffset = 3;
     int index;
 
     public int Index 
@@ -49,5 +50,15 @@ public class Checkpoint : MonoBehaviour
         CarProgressHandler carProgress = other.GetComponent<CarProgressHandler>();
         if (carProgress.CurrentCheckpoint != Index - 1) return;
         OnCarCrossedCheckpoint?.Invoke(carProgress, Index);
+    }
+
+    public Vector3 GetRandomDestination()
+    {
+        var destination = new Vector3(
+            transform.localPosition.x,
+            transform.localPosition.y,
+            transform.localPosition.z)
+            + transform.right * UnityEngine.Random.Range(-randomOffset, randomOffset);
+        return destination;
     }
 }
