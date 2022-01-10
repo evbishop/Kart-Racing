@@ -28,14 +28,22 @@ public class ProgressUIHandler : MonoBehaviour
 
     void Start()
     {
-        Checkpoint.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
-        LapHandler.OnPlayerFinishedLap += HandlePlayerFinishedLap;
+        CarProgressHandler.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
+        CarProgressHandler.OnPlayerFinishedLap += HandlePlayerFinishedLap;
+        LapHandler.OnLapsTextUpdated += HandleLapsTextUpdated;
     }
 
     void OnDestroy()
     {
-        Checkpoint.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
-        LapHandler.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
+        CarProgressHandler.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+        CarProgressHandler.OnPlayerFinishedLap -= HandlePlayerFinishedLap;
+        LapHandler.OnLapsTextUpdated -= HandleLapsTextUpdated;
+    }
+
+    void HandleLapsTextUpdated(string text, int sliderMaxValue)
+    {
+        LapText = text;
+        ProgressSliderMaxValue = sliderMaxValue;
     }
 
     void HandlePlayerCrossedCheckpoint(int crossedIndex)

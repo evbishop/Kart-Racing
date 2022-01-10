@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 592887032966334939}
   - component: {fileID: 2154788815560264762}
   m_Layer: 0
-  m_Name: Lap Handle
+  m_Name: Lap Handler
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,3 +111,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLaps: 3
   checkpoints: []
+  meshRenderer: {fileID: 592887032966334936}
