@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,8 +17,11 @@ public class Car : MonoBehaviour
     public float Speed { get; protected set; }
     public CarState State { get; protected set; } = CarState.OnGroundAndNotMoving;
 
+    public static event Action RotateCarOnSlopes;
+
     protected void Update()
     {
         transform.position = sphere.position;
+        RotateCarOnSlopes?.Invoke();
     }
 }

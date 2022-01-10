@@ -10,13 +10,28 @@ public class CarGroundChecker : MonoBehaviour
 
     public bool OnGround { get; private set; }
 
+    void Start()
+    {
+        Car.RotateCarOnSlopes += HandleRotation;
+    }
+
+    void OnDestroy()
+    {
+        Car.RotateCarOnSlopes -= HandleRotation;
+    }
+
+    void HandleRotation()
+    {
+        if (!Physics.Raycast(groundRayPoint.position, -transform.up,
+            out RaycastHit hit, groundRayLength, ground)) return;
+        transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+    }
+
     void Update()
     {
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out RaycastHit hit, groundRayLength, ground))
-        {
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, 
+            out RaycastHit hit, groundRayLength, ground))
             OnGround = true;
-            transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
-        }
         else OnGround = false;
     }
 }
