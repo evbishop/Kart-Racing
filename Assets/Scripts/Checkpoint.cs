@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    MeshRenderer meshRenderer;
+    [SerializeField] MeshRenderer meshRenderer;
     int index;
 
     public int Index 
@@ -24,7 +24,6 @@ public class Checkpoint : MonoBehaviour
     void Start()
     {
         CarProgressHandler.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
-        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void OnDestroy()

@@ -5,14 +5,15 @@ using UnityEngine;
 public class CarBot : Car
 {
     [SerializeField] float botTurnStrength = 5f, randomOffset = 4f;
+    [SerializeField] CarProgressHandler progressHandler;
     
     public float RandomOffset { get { return randomOffset; } }
     public Vector3 Destination { get; set; }
 
     void Start()
     {
-        CarProgressHandler.OnBotFinishedLap += HandleBotFinishedLap;
-        CarProgressHandler.OnBotCrossedCheckpoint += HandleBotCrossedCheckpoint;
+        progressHandler.OnBotFinishedLap += HandleBotFinishedLap;
+        progressHandler.OnBotCrossedCheckpoint += HandleBotCrossedCheckpoint;
         Destination = FindObjectOfType<LapHandler>().Checkpoints[0].gameObject.transform.position;
         Destination = new Vector3(
             Destination.x + Random.Range(-randomOffset, randomOffset),
@@ -22,13 +23,12 @@ public class CarBot : Car
 
     void OnDestroy()
     {
-        CarProgressHandler.OnBotFinishedLap -= HandleBotFinishedLap;
-        CarProgressHandler.OnBotCrossedCheckpoint -= HandleBotCrossedCheckpoint;
+        progressHandler.OnBotFinishedLap -= HandleBotFinishedLap;
+        progressHandler.OnBotCrossedCheckpoint -= HandleBotCrossedCheckpoint;
     }
 
     void HandleBotFinishedLap(CarBot bot)
     {
-        if (bot != this) return;
         LapHandler lapHandler = FindObjectOfType<LapHandler>();
         var checkpoints = lapHandler.Checkpoints;
         Destination = checkpoints[0].gameObject.transform.position;
@@ -40,7 +40,6 @@ public class CarBot : Car
 
     void HandleBotCrossedCheckpoint(CarBot bot, int checkpointIndex)
     {
-        if (bot != this) return;
         LapHandler lapHandler = FindObjectOfType<LapHandler>();
         var checkpoints = lapHandler.Checkpoints;
         Destination = lapHandler.FinalCheckpoint == checkpointIndex

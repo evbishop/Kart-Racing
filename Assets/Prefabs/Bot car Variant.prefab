@@ -19,6 +19,7 @@ MonoBehaviour:
   groundChecker: {fileID: 942283664665826454}
   botTurnStrength: 5
   randomOffset: 4
+  progressHandler: {fileID: 419746424567566442}
 --- !u!1001 &4989175837975674138
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -136,3 +137,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5931982618185229003, guid: bc40670e7046bec4bb47c2e9cfafb735, type: 3}
   m_PrefabInstance: {fileID: 4989175837975674138}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &419746424567566442 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4678714289993248112, guid: bc40670e7046bec4bb47c2e9cfafb735, type: 3}
+  m_PrefabInstance: {fileID: 4989175837975674138}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4064a2af632220e4390ca78062f05e20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -13,8 +13,8 @@ public class CarProgressHandler : MonoBehaviour
 
     public static event Action<int> OnPlayerCrossedCheckpoint;
     public static event Action<string> OnPlayerFinishedLap;
-    public static event Action<CarBot, int> OnBotCrossedCheckpoint;
-    public static event Action<CarBot> OnBotFinishedLap;
+    public event Action<CarBot, int> OnBotCrossedCheckpoint;
+    public event Action<CarBot> OnBotFinishedLap;
 
     void Start()
     {
