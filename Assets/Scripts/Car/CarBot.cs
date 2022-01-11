@@ -38,10 +38,10 @@ public class CarBot : Car
             checkpoints[checkpointIndex + 1].GetRandomDestination();
     }
 
-    void Update()
+    void LateUpdate()
     {
         BotMove();
-        base.Update();
+        base.LateUpdate();
     }
 
     void BotMove()

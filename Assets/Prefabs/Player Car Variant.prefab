@@ -16,7 +16,7 @@ MonoBehaviour:
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
-  groundChecker: {fileID: 7177906617221068615}
+  groundChecker: {fileID: 2029375136696923854}
 --- !u!1001 &3149066122820329163
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,15 +112,15 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5931982619383531730, guid: bc40670e7046bec4bb47c2e9cfafb735, type: 3}
   m_PrefabInstance: {fileID: 3149066122820329163}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7177906617221068615 stripped
+--- !u!114 &2029375136696923854 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5201295819794229644, guid: bc40670e7046bec4bb47c2e9cfafb735, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4006641378338039813, guid: bc40670e7046bec4bb47c2e9cfafb735, type: 3}
   m_PrefabInstance: {fileID: 3149066122820329163}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8782327373435082265}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12f36d51299c1c341a55f95a193c460b, type: 3}
+  m_Script: {fileID: 11500000, guid: fbd584276ea03c248ada8a5d5ee69ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &8782327374635400192 stripped

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CarPlayer : Car
 {
-    void Update()
+    void LateUpdate()
     {
         PlayerMove();
-        base.Update();
+        base.LateUpdate();
     }
 
     void PlayerMove()

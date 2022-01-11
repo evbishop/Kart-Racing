@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CarGroundChecker : MonoBehaviour
+public class CarGroundHandler : MonoBehaviour
 {
     [SerializeField] Transform groundRayPoint;
     [SerializeField] LayerMask ground;
@@ -16,16 +16,14 @@ public class CarGroundChecker : MonoBehaviour
         CheckForGround();
     }
 
-    void LateUpdate()
-    {
-        RotateOnSlopes();
-    }
-
     void CheckForGround()
     {
         if (Physics.Raycast(groundRayPoint.position, -transform.up,
             out hit, groundRayLength, ground))
+        {
             OnGround = true;
+            RotateOnSlopes();
+        }
         else OnGround = false;
     }
 

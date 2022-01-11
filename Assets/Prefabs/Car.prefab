@@ -173,7 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   car: {fileID: 5931982619383531728}
-  groundChecker: {fileID: 5201295819794229644}
+  groundChecker: {fileID: 4006641378338039813}
   rb: {fileID: 5931982618185228999}
   gravityForce: 10
   dragOnGround: 3
@@ -201,9 +201,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5931982619383531729}
   - component: {fileID: 5931982619383531728}
-  - component: {fileID: 5201295819794229644}
   - component: {fileID: 8642084063164316669}
   - component: {fileID: 5931982619383531727}
+  - component: {fileID: 4006641378338039813}
   m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
@@ -246,24 +246,7 @@ MonoBehaviour:
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
-  groundChecker: {fileID: 5201295819794229644}
---- !u!114 &5201295819794229644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5931982619383531730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12f36d51299c1c341a55f95a193c460b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundRayPoint: {fileID: 5931982618037009546}
-  ground:
-    serializedVersion: 2
-    m_Bits: 64
-  groundRayLength: 0.5
+  groundChecker: {fileID: 4006641378338039813}
 --- !u!114 &8642084063164316669
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -374,6 +357,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4006641378338039813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5931982619383531730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbd584276ea03c248ada8a5d5ee69ef6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundRayPoint: {fileID: 5931982618037009546}
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+  groundRayLength: 0.5
 --- !u!114 &8092377173797017238
 MonoBehaviour:
   m_ObjectHideFlags: 0

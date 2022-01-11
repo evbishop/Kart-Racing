@@ -5,7 +5,7 @@ using UnityEngine;
 public class CarSphere : MonoBehaviour
 {
     [SerializeField] Car car;
-    [SerializeField] CarGroundChecker groundChecker;
+    [SerializeField] CarGroundHandler groundChecker;
     [SerializeField] Rigidbody rb;
     [SerializeField] float gravityForce = 10f, dragOnGround = 3f, dragInAir = 0.1f;
 

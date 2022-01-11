@@ -7,9 +7,9 @@ public class Car : MonoBehaviour
 {
     [SerializeField] Transform sphere;
     [SerializeField] float forwardAccel = 8f, reverseAccel = 4f, turnStrength = 180f;
-    [SerializeField] CarGroundChecker groundChecker;
+    [SerializeField] CarGroundHandler groundChecker;
 
-    protected CarGroundChecker GroundChecker { get { return groundChecker; } }
+    protected CarGroundHandler GroundChecker { get { return groundChecker; } }
     protected float ForwardAccel { get { return forwardAccel; } }
     protected float ReverseAccel { get { return reverseAccel; } }
     protected float TurnStrength { get { return turnStrength; } }
@@ -17,7 +17,7 @@ public class Car : MonoBehaviour
     public float Speed { get; protected set; }
     public CarState State { get; protected set; } = CarState.OnGroundAndNotMoving;
 
-    protected void Update()
+    protected void LateUpdate()
     {
         transform.position = sphere.position;
     }
