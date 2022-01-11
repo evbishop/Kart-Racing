@@ -13,14 +13,25 @@ public class CarGroundChecker : MonoBehaviour
 
     void Update()
     {
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, 
+        CheckForGround();
+    }
+
+    void LateUpdate()
+    {
+        RotateOnSlopes();
+    }
+
+    void CheckForGround()
+    {
+        if (Physics.Raycast(groundRayPoint.position, -transform.up,
             out hit, groundRayLength, ground))
             OnGround = true;
         else OnGround = false;
     }
 
-    void LateUpdate()
+    void RotateOnSlopes()
     {
-        transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;
+        transform.rotation = Quaternion.FromToRotation
+            (transform.up, hit.normal) * transform.rotation;
     }
 }

@@ -27,15 +27,15 @@ public class CarBot : Car
     void HandleBotFinishedLap(CarBot bot)
     {
         var checkpoints = lapHandler.Checkpoints;
-        Destination = checkpoints[0].gameObject.transform.position;
+        Destination = checkpoints[0].GetRandomDestination();
     }
 
     void HandleBotCrossedCheckpoint(CarBot bot, int checkpointIndex)
     {
         var checkpoints = lapHandler.Checkpoints;
-        Destination = lapHandler.FinalCheckpoint == checkpointIndex
-            ? lapHandler.gameObject.transform.position
-            : checkpoints[checkpointIndex + 1].GetRandomDestination();
+        Destination = lapHandler.FinalCheckpoint == checkpointIndex ?
+            lapHandler.gameObject.transform.position :
+            checkpoints[checkpointIndex + 1].GetRandomDestination();
     }
 
     void Update()

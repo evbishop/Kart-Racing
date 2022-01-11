@@ -54,11 +54,10 @@ public class Checkpoint : MonoBehaviour
 
     public Vector3 GetRandomDestination()
     {
-        var destination = new Vector3(
+        return new Vector3(
             transform.localPosition.x,
             transform.localPosition.y,
             transform.localPosition.z)
             + transform.right * UnityEngine.Random.Range(-randomOffset, randomOffset);
-        return destination;
     }
 }
