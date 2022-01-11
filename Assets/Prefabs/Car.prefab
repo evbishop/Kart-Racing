@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4064a2af632220e4390ca78062f05e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  car: {fileID: 5931982619383531728}
 --- !u!1 &5931982619383531730
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,14 +242,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2c70153a29fd9478245ad09e6793db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
   sphere: {fileID: 5931982618185229003}
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
   groundChecker: {fileID: 5201295819794229644}
-  botTurnStrength: 5
-  randomOffset: 4
 --- !u!114 &5201295819794229644
 MonoBehaviour:
   m_ObjectHideFlags: 0
