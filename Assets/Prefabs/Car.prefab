@@ -60,7 +60,7 @@ GameObject:
   - component: {fileID: 5931982618185228999}
   - component: {fileID: 5931982618185228998}
   - component: {fileID: 4678714289993248112}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,7 +190,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4064a2af632220e4390ca78062f05e20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  car: {fileID: 0}
 --- !u!1 &5931982619383531730
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,10 +203,7 @@ GameObject:
   - component: {fileID: 5201295819794229644}
   - component: {fileID: 8642084063164316669}
   - component: {fileID: 5931982619383531727}
-  - component: {fileID: 5166910597492625665}
-  - component: {fileID: 7361758122853844867}
-  - component: {fileID: 663730643681494220}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Car
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,11 +241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f2c70153a29fd9478245ad09e6793db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   sphere: {fileID: 5931982618185229003}
   forwardAccel: 8
   reverseAccel: 4
   turnStrength: 180
   groundChecker: {fileID: 5201295819794229644}
+  botTurnStrength: 5
+  randomOffset: 4
 --- !u!114 &5201295819794229644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,49 +376,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &5166910597492625665
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5931982619383531730}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
---- !u!65 &7361758122853844867
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5931982619383531730}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.3102951, y: 0.76562804, z: 2.5655365}
-  m_Center: {x: 0.0013465881, y: -0.087001294, z: -0.0012283325}
---- !u!114 &663730643681494220
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5931982619383531730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d526cdc8f0968b24a9a5ddbd2062ee46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sphereRB: {fileID: 5931982618185228999}
-  modelRB: {fileID: 5166910597492625665}
 --- !u!114 &8092377173797017238
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -630,10 +586,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -8569518100099689332, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: -7520589500867835406, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -646,26 +598,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: f9fb39932ff39ea41aa4bb2c4a48b44f, type: 2}
-    - target: {fileID: -6899449840304533443, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: -4819223349682164798, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: -1328860500621903259, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
       propertyPath: m_Name
       value: race
       objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 3164286642307905054, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -690,10 +626,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[2]
       value: 
       objectReference: {fileID: 2100000, guid: f9fb39932ff39ea41aa4bb2c4a48b44f, type: 2}
-    - target: {fileID: 7626630938287245856, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
-      propertyPath: m_Layer
-      value: 8
-      objectReference: {fileID: 0}
     - target: {fileID: 8449996119470504636, guid: 22e7027888d7a1a458459aa634b3e2c5, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

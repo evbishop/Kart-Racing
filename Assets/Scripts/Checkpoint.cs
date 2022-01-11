@@ -47,7 +47,6 @@ public class Checkpoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent<Car>()) return;
         CarProgressHandler carProgress = other.GetComponent<CarProgressHandler>();
         if (carProgress.CurrentCheckpoint != Index - 1) return;
         OnCarCrossedCheckpoint?.Invoke(carProgress, Index);
