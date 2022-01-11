@@ -12,12 +12,22 @@ public class Countdown : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 0;
+        SceneLoader.OnStartGame += HandleStartGame;
+    }
+
+    void OnDestroy()
+    {
+        SceneLoader.OnStartGame -= HandleStartGame;
+    }
+
+    void HandleStartGame()
+    {
         StartCoroutine(StartLevel());
     }
 
     IEnumerator StartLevel()
     {
-        Time.timeScale = 0;
         countdownText.color = red;
         for (int countdown = maxCountdown; countdown > 0; countdown--)
         {
