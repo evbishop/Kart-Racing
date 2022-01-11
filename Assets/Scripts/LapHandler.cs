@@ -39,6 +39,7 @@ public class LapHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.GetComponent<Car>()) return;
         CarProgressHandler carProgress = other.GetComponent<CarProgressHandler>();
         if (carProgress.CurrentCheckpoint != FinalCheckpoint) return;
 
