@@ -1999,7 +1999,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2154788815560264762, guid: 96ae3076022bb3b43b953c5e82176377, type: 3}
       propertyPath: numOfLaps
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2154788815560264762, guid: 96ae3076022bb3b43b953c5e82176377, type: 3}
       propertyPath: checkpoints.Array.size

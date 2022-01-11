@@ -13,15 +13,15 @@ public class Countdown : MonoBehaviour
     void Start()
     {
         Time.timeScale = 0;
-        SceneLoader.OnStartGame += HandleStartGame;
+        StartGameButton.OnStartGame += HandleStartGame;
     }
 
     void OnDestroy()
     {
-        SceneLoader.OnStartGame -= HandleStartGame;
+        StartGameButton.OnStartGame -= HandleStartGame;
     }
 
-    void HandleStartGame()
+    void HandleStartGame(int numOfLaps)
     {
         StartCoroutine(StartLevel());
     }

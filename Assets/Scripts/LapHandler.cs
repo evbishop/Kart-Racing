@@ -5,12 +5,20 @@ using UnityEngine;
 
 public class LapHandler : MonoBehaviour
 {
-    [SerializeField] int numOfLaps = 3;
+    [SerializeField] int numOfLaps = 1;
     [SerializeField] Checkpoint[] checkpoints;
     [SerializeField] MeshRenderer meshRenderer;
 
     public Checkpoint[] Checkpoints { get { return checkpoints; } }
-    public int NumOfLaps { get { return numOfLaps; } }
+    public int NumOfLaps 
+    { 
+        get { return numOfLaps; }
+        private set 
+        { 
+            numOfLaps = value;
+            OnLapsTextUpdated?.Invoke(1, numOfLaps, checkpoints.Length);
+        }
+    }
     public int FinalCheckpoint { get; private set; }
     
     public static event Action<CarProgressHandler> OnCarFinishedLap;
@@ -20,7 +28,8 @@ public class LapHandler : MonoBehaviour
     void Start()
     {
         CarProgressHandler.OnPlayerCrossedCheckpoint += HandlePlayerCrossedCheckpoint;
-        OnLapsTextUpdated?.Invoke(1, NumOfLaps, checkpoints.Length);
+        StartGameButton.OnStartGame += HandleStartGame;
+        
         FinalCheckpoint = checkpoints.Length - 1;
         for (int i = 0; i < checkpoints.Length; i++)
             checkpoints[i].Index = i;
@@ -28,13 +37,19 @@ public class LapHandler : MonoBehaviour
 
     void OnDestroy()
     {
-         CarProgressHandler.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+        CarProgressHandler.OnPlayerCrossedCheckpoint -= HandlePlayerCrossedCheckpoint;
+        StartGameButton.OnStartGame -= HandleStartGame;
     }
 
     void HandlePlayerCrossedCheckpoint(int crossedIndex)
     {
         if (crossedIndex == FinalCheckpoint)
             meshRenderer.enabled = true;
+    }
+
+    void HandleStartGame(int numOfLaps)
+    {
+        NumOfLaps = numOfLaps;
     }
 
     void OnTriggerEnter(Collider other)
